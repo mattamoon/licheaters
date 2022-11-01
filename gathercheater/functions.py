@@ -1,10 +1,11 @@
 import os
 import pandas as pd
 import berserk
+from gathercheater.constants import API_KEY
 
 
 def lichess_access():
-    lichess_key = os.environ['lichess']
+    lichess_key = os.environ[API_KEY]
     token = lichess_key
     token = token.strip()
     session = berserk.TokenSession(token)

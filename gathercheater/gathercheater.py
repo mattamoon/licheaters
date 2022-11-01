@@ -1,6 +1,6 @@
-from functions import lichess_access, berserk, remove_user, players_to_df, data_chunk, users_from_df
-import constants as c
-from constants import dt
+from gathercheater.functions import *
+import gathercheater.constants as c
+from gathercheater.constants import dt
 
 
 class GatherCheater:
@@ -18,7 +18,7 @@ class GatherCheater:
     def games_by_player_dates(self):
         start_y = int(self.start.strftime('%Y'))
         start_m = int(self.start.strftime('%m'))
-        start_d = int(self.strftime('%d'))
+        start_d = int(self.start.strftime('%d'))
 
         # End time variables
         end_y = int(self.end.strftime('%Y'))
@@ -32,14 +32,7 @@ class GatherCheater:
 
         return games_data
 
-    def get_players_from_games(self, game_list):
-        # get list of players from the list of dicts returned from games_by_player_dates
-        p_list = []
-
-        for game in game_list:
-            p_list.append(game['players']['white']['user']['id'])
-            p_list.append(game['players']['black']['user']['id'])
-
+    def data_to_df(self, p_list):
         # remove duplicates from list
         p_list = list(dict.fromkeys(p_list))
 
@@ -49,15 +42,14 @@ class GatherCheater:
         # convert players to dataframe in order to chunk
         p_list_df = players_to_df(p_list)
 
-        # chunk data if more than 300 rows
-        if p_list_df.shape[0] > self.api_limit:
-            p_list_df = data_chunk(p_list, self.api_limit)
+        # chunk data regardless of size
+        p_list_df = data_chunk(p_list_df, self.api_limit)
 
         return p_list_df
 
-    def create_player_list(self, df):
+    def create_player_list(self, list_df):
 
-        player_list = users_from_df(df[self.df_index])
+        player_list = users_from_df(list_df[self.df_index])
 
         # convert list of players to string
         player_list_string = ','.join(player_list)
@@ -68,9 +60,18 @@ class GatherCheater:
 
         api_data = self.lichess.users.get_by_id(players)
 
-        self.data_list.extend(api_data)
-
         return api_data
+
+    @staticmethod
+    def get_players_from_games(game_list):
+        # get list of players from the list of dicts returned from games_by_player_dates
+        p_list = []
+
+        for game in game_list:
+            p_list.append(game['players']['white']['user']['id'])
+            p_list.append(game['players']['black']['user']['id'])
+
+        return p_list
 
     @staticmethod
     def check_cheaters(players):
