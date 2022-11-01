@@ -1,11 +1,16 @@
 import os
 import pandas as pd
 import berserk
-from gathercheater.constants import API_KEY
+from dotenv import load_dotenv
+
+
+def configure():
+    load_dotenv()
 
 
 def lichess_access():
-    lichess_key = os.environ[API_KEY]
+    configure()
+    lichess_key = os.getenv('api_key')
     token = lichess_key
     token = token.strip()
     session = berserk.TokenSession(token)
@@ -35,9 +40,7 @@ def users_from_df(df):
 
 
 def data_chunk(df, chunk_size):
-    # Lichess rate limit is 300 ids per call. Chunk PGN data by groups of 300. SO
+    # Lichess rate limit is 300 ids per call. Chunk dataframe in groups of 300
     list_df = [df[i:i + chunk_size] for i in range(0, df.shape[0], chunk_size)]
 
     return list_df
-
-
