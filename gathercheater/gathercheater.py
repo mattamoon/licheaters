@@ -7,7 +7,7 @@ class GatherCheater:
 
     def __init__(self):
         self.lichess = lichess_access()
-        self.user = c.USER
+        self.user = c.USER.lower()
         self.start = c.START
         self.end = c.END
         self.max_games = c.MAX_GAMES
@@ -37,7 +37,8 @@ class GatherCheater:
         p_list = list(dict.fromkeys(p_list))
 
         # remove current user from list
-        p_list = remove_user(self.user, p_list)
+        if self.user in p_list:
+            p_list = remove_user(self.user, p_list)
 
         # convert players to dataframe in order to chunk
         p_list_df = players_to_df(p_list)
@@ -68,8 +69,12 @@ class GatherCheater:
         p_list = []
 
         for game in game_list:
-            p_list.append(game['players']['white']['user']['id'])
-            p_list.append(game['players']['black']['user']['id'])
+            try:
+                p_list.append(game['players']['white']['user']['name'].lower())
+                p_list.append(game['players']['black']['user']['name'].lower())
+            except KeyError:
+                print('All games reviewed!')
+                break
 
         return p_list
 
@@ -92,8 +97,16 @@ class GatherCheater:
     @staticmethod
     def display_data(players):
         (violated, closed, good) = GatherCheater.check_cheaters(players)
+        (v_total, c_total, g_total) = [len(violated),len(closed), len(good)]
 
         # Display new lists
-        print(f'Violated Lichess ToS: {violated} \n')
-        print(f'Closed accounts: {closed} \n')
-        print(f'Good Status: {good} \n')
+        print(f'Violated Lichess ToS: {violated}')
+        print(f'Total violated: {v_total} \n')
+        print(f'Closed accounts: {closed} ')
+        print(f'Total closed: {c_total} \n')
+        print(f'Good Status: {good} ')
+        print(f'Total good: {g_total}\n')
+
+        users_total = v_total + c_total + g_total
+
+        print(f'Total user accounts reviewed: {users_total}')

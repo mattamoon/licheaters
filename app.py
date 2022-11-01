@@ -10,7 +10,7 @@ def app():
         try:
             players_df[lichess.df_index]
         except(Exception,):
-            print('Data Analysis Complete!')
+            print('Data Analysis Complete! \n')
             break
         else:
             player_list = lichess.create_player_list(players_df)

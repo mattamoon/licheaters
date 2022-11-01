@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import berserk
 from dotenv import load_dotenv
+from gathercheater.constants import API_KEY
 
 
 def configure():
@@ -10,7 +11,7 @@ def configure():
 
 def lichess_access():
     configure()
-    lichess_key = os.getenv('api_key')
+    lichess_key = os.getenv(API_KEY)
     token = lichess_key
     token = token.strip()
     session = berserk.TokenSession(token)
