@@ -16,6 +16,7 @@ class GatherCheater:
         self.data_list = []
 
     def games_by_player_dates(self):
+        # Start time variables
         start_y = int(self.start.strftime('%Y'))
         start_m = int(self.start.strftime('%m'))
         start_d = int(self.start.strftime('%d'))
@@ -73,7 +74,6 @@ class GatherCheater:
                 p_list.append(game['players']['white']['user']['name'].lower())
                 p_list.append(game['players']['black']['user']['name'].lower())
             except KeyError:
-                print('All games reviewed!')
                 break
 
         return p_list
@@ -104,7 +104,7 @@ class GatherCheater:
         print(f'Total violated: {v_total} \n')
         print(f'Closed accounts: {closed} ')
         print(f'Total closed: {c_total} \n')
-        print(f'Good Status: {good} ')
+        print(f'Good Status...for now: {good} ')
         print(f'Total good: {g_total}\n')
 
         users_total = v_total + c_total + g_total

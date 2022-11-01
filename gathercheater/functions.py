@@ -10,7 +10,6 @@ def configure():
 
 
 def lichess_access():
-    configure()
     lichess_key = os.getenv(API_KEY)
     token = lichess_key
     token = token.strip()

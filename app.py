@@ -1,11 +1,15 @@
 from gathercheater.gathercheater import GatherCheater
+from gathercheater.functions import configure
 
 
 def app():
+    configure()
     lichess = GatherCheater()
     games = lichess.games_by_player_dates()
     player_from_games = lichess.get_players_from_games(games)
     players_df = lichess.data_to_df(player_from_games)
+
+    # Loop through list of dataframes
     while True:
         try:
             players_df[lichess.df_index]
