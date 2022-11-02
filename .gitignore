@@ -3,3 +3,7 @@
 /venv/
 /.idea
 .idea
+/src/gathercheater.egg-info/
+/.mypy_cache/
+/.pytest_cache/
+/.coverage
