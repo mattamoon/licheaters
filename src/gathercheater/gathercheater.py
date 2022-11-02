@@ -1,6 +1,6 @@
-from src.gathercheater.functions import *
+from src.gathercheater.functions import lichess_access, remove_user, players_to_df, data_chunk, users_from_df
 from src.gathercheater import constants as c
-from src.gathercheater.constants import dt
+from src.gathercheater.constants import dt, berserk
 
 
 class GatherCheater:
@@ -97,7 +97,7 @@ class GatherCheater:
     @staticmethod
     def display_data(players):
         (violated, closed, good) = GatherCheater.check_cheaters(players)
-        (v_total, c_total, g_total) = [len(violated),len(closed), len(good)]
+        (v_total, c_total, g_total) = [len(violated), len(closed), len(good)]
 
         # Display new lists
         print(f'Violated Lichess ToS: {violated}')
@@ -105,8 +105,7 @@ class GatherCheater:
         print(f'Closed accounts: {closed} ')
         print(f'Total closed: {c_total} \n')
         print(f'Good Status...for now: {good} ')
-        print(f'Total good: {g_total}\n')
+        print(f'Total good: {g_total}')
 
         users_total = v_total + c_total + g_total
-
-        print(f'Total user accounts reviewed: {users_total}')
+        print(f'\nTotal user accounts reviewed: {users_total}')
