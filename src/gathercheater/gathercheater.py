@@ -1,6 +1,6 @@
-from gathercheater.functions import *
-import gathercheater.constants as c
-from gathercheater.constants import dt
+from src.gathercheater.functions import *
+from src.gathercheater import constants as c
+from src.gathercheater.constants import dt
 
 
 class GatherCheater:

@@ -1,5 +1,5 @@
-from gathercheater.gathercheater import GatherCheater
-from gathercheater.functions import configure
+from src.gathercheater import GatherCheater
+from src.gathercheater import configure
 
 
 def app():

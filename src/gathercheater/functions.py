@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import berserk
 from dotenv import load_dotenv
-from gathercheater.constants import API_KEY
+from src.gathercheater.constants import API_KEY
 
 
 def configure():

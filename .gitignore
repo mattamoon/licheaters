@@ -1,5 +1,5 @@
 /.env
-/gathercheater/.env
+/src/gathercheater/.env
 /venv/
 /.idea
 .idea
