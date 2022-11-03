@@ -1,6 +1,7 @@
 from src.gathercheater.functions import lichess_access, remove_user, players_to_df, data_chunk, users_from_df
 from src.gathercheater import constants as c
-from src.gathercheater.constants import dt, berserk
+from src.gathercheater.constants import dt
+import berserk
 
 
 class GatherCheater:

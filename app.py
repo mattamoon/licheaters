@@ -1,5 +1,7 @@
-from src.gathercheater import GatherCheater
-from src.gathercheater import configure
+import berserk.exceptions
+
+from src.gathercheater.gathercheater import GatherCheater
+from src.gathercheater.functions import configure
 
 
 def app():
