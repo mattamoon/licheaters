@@ -1,5 +1,3 @@
-import berserk.exceptions
-
 from src.gathercheater.gathercheater import GatherCheater
 from src.gathercheater.functions import configure
 
