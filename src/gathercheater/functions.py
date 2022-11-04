@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import berserk
 from dotenv import load_dotenv
-from src.gathercheater.constants import API_KEY
+from gathercheater.constants import API_KEY
 
 
 def configure():
@@ -30,6 +30,13 @@ def players_to_df(list_of_players):
     return df
 
 
+def data_chunk(df, chunk_size):
+    # Lichess rate limit is 300 ids per call. Chunk dataframe in groups of 300
+    list_df = [df[i:i + chunk_size] for i in range(0, df.shape[0], chunk_size)]
+
+    return list_df
+
+
 def users_from_df(df):
     # Store all users from df to a list
     all_players = df['users'].tolist()
@@ -37,8 +44,3 @@ def users_from_df(df):
     return all_players
 
 
-def data_chunk(df, chunk_size):
-    # Lichess rate limit is 300 ids per call. Chunk dataframe in groups of 300
-    list_df = [df[i:i + chunk_size] for i in range(0, df.shape[0], chunk_size)]
-
-    return list_df

@@ -1,6 +1,6 @@
-from src.gathercheater.functions import lichess_access, remove_user, players_to_df, data_chunk, users_from_df
-from src.gathercheater import constants as c
-from src.gathercheater.constants import dt
+from gathercheater.functions import lichess_access, remove_user, players_to_df, data_chunk, users_from_df
+from gathercheater.constants import dt
+import gathercheater.constants as c
 import berserk
 
 
@@ -36,7 +36,7 @@ class GatherCheater:
 
     def data_to_df(self, p_list):
         # remove duplicates from list
-        p_list = list(dict.fromkeys(p_list))
+        p_list = list(set(p_list))
 
         # remove current user from list
         if self.user in p_list:
