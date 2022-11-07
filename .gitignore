@@ -1,5 +1,12 @@
 /.env
-/gathercheater/.env
+/src/gathercheater/.env
 /venv/
 /.idea
 .idea
+/src/gathercheater.egg-info/
+/.mypy_cache/
+/.pytest_cache/
+/.coverage
+/tests/.coverage
+/gathercheater.log
+
