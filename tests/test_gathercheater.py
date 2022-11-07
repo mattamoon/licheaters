@@ -6,11 +6,8 @@ import gathercheater.constants as c
 import berserk
 import berserk.utils
 import berserk.exceptions
-import logging
 import pytest
 
-logging.basicConfig(filename='gathercheater.log', level=logging.DEBUG,
-                    format='%(levelname)s:%(message)s')
 
 __all__ = ('lichess_access',
            'configure',
