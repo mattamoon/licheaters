@@ -71,7 +71,7 @@ class TestClass:
         assert api_player_search_limit <= 300
 
     def test_games_by_player_dates(self):
-        """Test Dates, User connected, time variables, user has games"""
+        """Test Dates, time variables, user has games. If api key is bad or not present expect http 401"""
         b_start = game_dates(self.lichess.start)
         b_end = game_dates(self.lichess.end)
         games = self.lichess.games_by_player_dates(b_start, b_end)
@@ -101,9 +101,9 @@ class TestClass:
         assert games[self.lichess.df_index] is not None
 
     def test_get_players_from_games(self):
-        games = self.lichess.games_by_player_dates(game_dates(self.lichess.start), game_dates(self.lichess.end))
-        players_from_games = self.lichess.get_players_from_games(games)
-        assert players_from_games is not None
+        test_dict = [{'players': {'white': {'user': {'name': 'basilcandle'}}, 'black': {'user': {'name': 'raz'}}}}, {}]
+        games = self.lichess.get_players_from_games(test_dict)
+        assert games == ['basilcandle', 'raz']
 
     def test_check_cheaters(self):
         test = [{'username': 'a', 'tosViolation': True}, {'username': 'b', 'disabled': True}, {'username': 'c'}]
@@ -113,10 +113,13 @@ class TestClass:
         assert closed == ['b']
         assert good == ['c']
 
-
     def test_bad_key(self):
-        test = [{'username': 'a', 'violation': True}, {'username': 'b', 'disabled': True}, {'username': 'c'}]
+        """Testing with bad user keys"""
+        test = [{'user': 'a', 'violation': True}, {'user': 'b', 'disabled': True}, {'user': 'c'}]
 
         with pytest.raises(KeyError):
-            for item in test:
-                item[2]['tosViolation']
+            self.lichess.check_cheaters(test)
+
+    def test_display_data(self, capsys):
+        """Not sure how to do this..."""
+        pass

@@ -1,10 +1,6 @@
 from gathercheater.functions import lichess_access
 import datetime as dt
 import gathercheater.constants as c
-import logging
-
-logging.basicConfig(filename='gathercheater.log', level=logging.INFO,
-                    format='%(levelname)s:%(message)s')
 
 
 class GatherCheater:
@@ -87,17 +83,14 @@ class GatherCheater:
 
     @staticmethod
     def get_players_from_games(game_list):
-        # get list of players from the list of dicts returned from games_by_player_dates
+        """get list of players from the list of dicts, returned from games_by_player_dates"""
+
         p_list = []
-        if game_list is not None:
-            for game in game_list:
-                try:
-                    p_list.append(game['players']['white']['user']['name'].lower())
-                    p_list.append(game['players']['black']['user']['name'].lower())
-                except KeyError:
-                    break
-        else:
-            return p_list
+        for game in game_list:
+            if game.get('players'):
+                p_list.append(game['players']['white']['user']['name'].lower())
+                p_list.append(game['players']['black']['user']['name'].lower())
+
         return p_list
 
     @staticmethod
@@ -121,7 +114,7 @@ class GatherCheater:
         return cheater_list, closed_accounts, not_cheater
 
     @staticmethod
-    def display_data(players):
+    def display_data(players):  # pragma: no cover
         (violated, closed, good) = GatherCheater.check_cheaters(players)
         (v_total, c_total, g_total) = [len(violated), len(closed), len(good)]
 
