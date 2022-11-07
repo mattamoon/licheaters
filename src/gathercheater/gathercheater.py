@@ -1,82 +1,103 @@
-from gathercheater.functions import lichess_access, remove_user, players_to_df, data_chunk, users_from_df
-from gathercheater.constants import dt
+from gathercheater.functions import lichess_access
+import datetime as dt
 import gathercheater.constants as c
-import berserk
+import logging
+
+logging.basicConfig(filename='gathercheater.log', level=logging.INFO,
+                    format='%(levelname)s:%(message)s')
 
 
 class GatherCheater:
 
     def __init__(self):
         self.lichess = lichess_access()
-        self.user = c.USER.lower()
-        self.start = c.START
-        self.end = c.END
-        self.max_games = c.MAX_GAMES
-        self.df_index = c.DF_INDEX
-        self.api_limit = c.LICHESS_API_LIMIT
+        self.__user = c.USER.lower()
+        self.__start = c.START
+        self.__end = c.END
+        self.__max_games = c.MAX_GAMES
+        self.df_index = 0
+        self.__api_limit = c.LICHESS_API_LIMIT
         self.data_list = []
 
-    def games_by_player_dates(self):
-        # Start time variables
-        start_y = int(self.start.strftime('%Y'))
-        start_m = int(self.start.strftime('%m'))
-        start_d = int(self.start.strftime('%d'))
+    @property
+    def user(self):
+        return self.__user
 
-        # End time variables
-        end_y = int(self.end.strftime('%Y'))
-        end_m = int(self.end.strftime('%m'))
-        end_d = int(self.end.strftime('%d'))
+    @user.setter
+    def user(self, value: str):
+        """Set user to check games"""
+        self.__user = value.lower()
 
-        starting = berserk.utils.to_millis(dt.datetime(start_y, start_m, start_d))
-        ending = berserk.utils.to_millis(dt.datetime(end_y, end_m, end_d))
+    @property
+    def start(self):
+        return self.__start
 
-        games_data = self.lichess.games.export_by_player(self.user, since=starting, until=ending, max=self.max_games)
+    @start.setter
+    def start(self, value: str):
+        """Use YYYY/m/d format"""
+        value_format = '%Y/%m/%d'
+        try:
+            self.__start = dt.datetime.strptime(value, value_format)
+
+        except (Exception,):
+            raise ValueError('Format is probably invalid')
+
+    @property
+    def end(self):
+        return self.__end
+
+    @end.setter
+    def end(self, value: str):
+        """Use yyyy/m/d format to set datetime object"""
+        value_format = '%Y/%m/%d'
+        try:
+            self.__end = dt.datetime.strptime(value, value_format)
+        except (Exception,):
+            raise ValueError('Format is probably invalid')
+
+    @property
+    def max_games(self):
+        return self.__max_games
+
+    @max_games.setter
+    def max_games(self, value: int):
+        if value > 0:
+            self.__max_games = value
+        else:
+            raise ValueError('Value cannot be <= 0')
+
+    @property
+    def api_limit(self):
+        return self.__api_limit
+
+    def games_by_player_dates(self, berserk_start, berserk_end):
+        """Searches Lichess API for games from a user between 2 dates & returns those games as a generator"""
+
+        starting = berserk_start
+        ending = berserk_end
+
+        games_data = self.lichess.games.export_by_player(self.__user, since=starting, until=ending,
+                                                         max=self.__max_games)
 
         return games_data
 
-    def data_to_df(self, p_list):
-        # remove duplicates from list
-        p_list = list(set(p_list))
-
-        # remove current user from list
-        if self.user in p_list:
-            p_list = remove_user(self.user, p_list)
-
-        # convert players to dataframe in order to chunk
-        p_list_df = players_to_df(p_list)
-
-        # chunk data regardless of size
-        p_list_df = data_chunk(p_list_df, self.api_limit)
-
-        return p_list_df
-
-    def create_player_list(self, list_df):
-
-        player_list = users_from_df(list_df[self.df_index])
-
-        # convert list of players to string
-        player_list_string = ','.join(player_list)
-
-        return player_list_string
-
     def games_by_player_list(self, players):
-
         api_data = self.lichess.users.get_by_id(players)
-
         return api_data
 
     @staticmethod
     def get_players_from_games(game_list):
         # get list of players from the list of dicts returned from games_by_player_dates
         p_list = []
-
-        for game in game_list:
-            try:
-                p_list.append(game['players']['white']['user']['name'].lower())
-                p_list.append(game['players']['black']['user']['name'].lower())
-            except KeyError:
-                break
-
+        if game_list is not None:
+            for game in game_list:
+                try:
+                    p_list.append(game['players']['white']['user']['name'].lower())
+                    p_list.append(game['players']['black']['user']['name'].lower())
+                except KeyError:
+                    break
+        else:
+            return p_list
         return p_list
 
     @staticmethod
@@ -85,13 +106,17 @@ class GatherCheater:
         closed_accounts = []
         not_cheater = []
 
-        for item in players:
-            if item.get('tosViolation'):
-                cheater_list.append(item['username'])
-            elif item.get('disabled'):
-                closed_accounts.append(item['username'])
-            else:
-                not_cheater.append(item['username'])
+        try:
+            for item in players:
+                if item.get('tosViolation'):
+                    cheater_list.append(item['username'])
+                elif item.get('disabled'):
+                    closed_accounts.append(item['username'])
+                else:
+                    not_cheater.append(item['username'])
+
+        except KeyError:
+            raise KeyError
 
         return cheater_list, closed_accounts, not_cheater
 
