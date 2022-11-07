@@ -23,9 +23,9 @@ class TestClass:
     lichess = GatherCheater()
 
     def test_user(self):
-        user_id = 'BASILCANDLE'
+        user_id = c.USER.upper()
         self.lichess.user = user_id
-        assert self.lichess.user == 'basilcandle'
+        assert self.lichess.user == c.USER.lower()
         assert self.lichess.user == user_id.lower()
         assert user_id != self.lichess.user
 
@@ -67,6 +67,7 @@ class TestClass:
         api_player_search_limit = self.lichess.api_limit
         assert api_player_search_limit <= 300
 
+    @pytest.mark.skip(reason="HTTP Error if api key is bad or missing")
     def test_games_by_player_dates(self):
         """Test Dates, time variables, user has games. If api key is bad or not present expect http 401"""
         b_start = game_dates(self.lichess.start)
@@ -92,6 +93,7 @@ class TestClass:
         test_player_list = create_player_string(test_player_list)
         assert test_player_list == 'a,b,c'
 
+    @pytest.mark.skip(reason="HTTP Error if api key is bad or missing")
     def test_games_by_player_list(self):
         players = c.USER
         games = self.lichess.games_by_player_list(players)
