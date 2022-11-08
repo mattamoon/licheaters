@@ -8,7 +8,7 @@
 
 1. Clone the repo
 
-####or,
+or,
 
 
 
