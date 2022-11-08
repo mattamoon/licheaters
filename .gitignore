@@ -1,4 +1,4 @@
-/.env
+.env
 /src/gathercheater/.env
 /venv/
 /.idea
@@ -8,5 +8,5 @@
 /.pytest_cache/
 /.coverage
 /tests/.coverage
-/gathercheater.log
+
 
