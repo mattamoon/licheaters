@@ -7,11 +7,9 @@ Utility package to check users marked as violating Lichess ToS
 
 #Install
 
-1. Clone the repo
+1. Fork the repo
 
 or,
-
-
 
 2. pip install "git+https://github.com/mattamoon/licheaters.git"
 
