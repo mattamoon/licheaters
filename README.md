@@ -1,6 +1,7 @@
 # licheaters
 ![Tests](https://github.com/mattamoon/licheaters/actions/workflows/tests.yml/badge.svg) 
-<p>Library to check users marked as violating Lichess ToS
+
+Utility package to check users marked as violating Lichess ToS
 
 - utilizes Berserk & Lichess API
 
