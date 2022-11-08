@@ -1,5 +1,16 @@
 # licheaters
+![Tests](https://github.com/mattamoon/licheaters/actions/workflows/tests.yml/badge.svg) 
+<p>Library to check users marked as violating Lichess ToS
 
-Check your lichess games to see users who Violated Tos or closed their account(s)!
+- utilizes Berserk & Lichess API
 
-![Tests](https://github.com/mattamoon/licheaters/actions/workflows/tests.yml/badge.svg)
+#Install
+
+1. Clone the repo
+
+####or,
+
+
+
+2. pip install "git+https://github.com/mattamoon/licheaters.git"
+
