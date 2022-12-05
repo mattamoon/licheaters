@@ -6,7 +6,7 @@ import gathercheater.constants as c
 class GatherCheater:
 
     def __init__(self):
-        self.lichess = lichess_access()
+        self._lichess = lichess_access()
         self.__user = c.USER.lower()
         self.__start = c.START
         self.__end = c.END
@@ -14,6 +14,14 @@ class GatherCheater:
         self.df_index = 0
         self.__api_limit = c.LICHESS_API_LIMIT
         self.data_list = []
+
+    @property
+    def lichess(self):
+        return self._lichess
+
+    @lichess.setter
+    def lichess(self, client):
+        self._lichess = client
 
     @property
     def user(self):

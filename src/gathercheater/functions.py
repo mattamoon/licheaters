@@ -3,7 +3,7 @@ import pandas as pd
 import berserk
 import datetime as dt
 from dotenv import load_dotenv
-from gathercheater.constants import API_KEY, LICHESS_API_LIMIT
+from gathercheater.constants import LICHESS_API_LIMIT
 
 
 def configure():
@@ -11,7 +11,7 @@ def configure():
 
 
 def lichess_access():
-    lichess_key = os.getenv(API_KEY)
+    lichess_key = os.getenv('api_key')
     session = berserk.TokenSession(lichess_key)
     client = berserk.Client(session)
 
