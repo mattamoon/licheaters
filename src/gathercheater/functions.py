@@ -11,7 +11,7 @@ def configure():
 
 
 def lichess_access():
-    lichess_key = os.getenv(API_KEY)
+    lichess_key = os.getenv('api_key')
     session = berserk.TokenSession(lichess_key)
     client = berserk.Client(session)
 
