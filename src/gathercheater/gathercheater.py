@@ -87,7 +87,9 @@ class GatherCheater:
 
     def games_by_player_list(self, players):
         api_data = self.lichess.users.get_by_id(players)
-        return api_data
+        for elements in api_data:
+          self.data_list.append(elements)
+        return self.data_list
 
     @staticmethod
     def get_players_from_games(game_list):
