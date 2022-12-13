@@ -1,4 +1,4 @@
-berserk==0.10.0
+berserk @ git+https://github.com/mattamoon/berserk-licheaters.git
 certifi==2022.9.24
 charset-normalizer==2.1.1
 Deprecated==1.2.13
