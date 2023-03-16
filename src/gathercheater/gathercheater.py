@@ -93,13 +93,15 @@ class GatherCheater:
     def get_players_from_games(game_list):
         """get list of players from the list of dicts, returned from games_by_player_dates"""
 
-        p_list = []
+        list_of_players = []
         for game in game_list:
-            if game.get('players'):
-                p_list.append(game['players']['white']['user']['name'].lower())
-                p_list.append(game['players']['black']['user']['name'].lower())
+            try:
+                list_of_players.append(game['players']['white']['user']['name'].lower())
+                list_of_players.append(game['players']['black']['user']['name'].lower())
+            except KeyError:
+                continue
 
-        return p_list
+        return list_of_players
 
     @staticmethod
     def check_cheaters(players):
