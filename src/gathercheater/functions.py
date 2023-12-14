@@ -1,6 +1,4 @@
-import os
 import pandas as pd
-import berserk
 from dotenv import load_dotenv
 from gathercheater.constants import LICHESS_API_LIMIT
 
