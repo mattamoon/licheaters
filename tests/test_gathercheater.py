@@ -1,11 +1,9 @@
-from gathercheater.functions import lichess_access, configure, load_dotenv, players_to_df, list_util, \
-    pd, create_player_list, create_player_string
+from gathercheater.functions import lichess_access, configure, load_dotenv, players_to_df, list_util, pd, \
+    create_player_list, create_player_string
 from gathercheater.gathercheater import GatherCheater
 from gathercheater.constants import API_KEY, START, END, USER, dt
 import gathercheater.constants as c
 import berserk
-import berserk.utils
-import berserk.exceptions
 import pytest
 
 __all__ = ('lichess_access',
@@ -30,8 +28,8 @@ class TestClass:
 
     def test_dates(self):
         value = dt.date(2022, 1, 1)
-        self.lichess.start = datetime.date.fromisoformat('2022/1/1')
-        self.lichess.end = datetime.date.fromisoformat('2022/1/1')
+        self.lichess.start = dt.date.fromisoformat('2022/1/1')
+        self.lichess.end = dt.date.fromisoformat('2022/1/1')
         assert self.lichess.start == value
         assert self.lichess.end == value
 

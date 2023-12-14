@@ -2,7 +2,6 @@ from gathercheater.functions import lichess_access
 import datetime as dt
 import gathercheater.constants as c
 import berserk
-from berserk import utils
 
 
 class GatherCheater:

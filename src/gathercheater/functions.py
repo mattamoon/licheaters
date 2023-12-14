@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 import berserk
-import datetime as dt
 from dotenv import load_dotenv
 from gathercheater.constants import LICHESS_API_LIMIT
 
