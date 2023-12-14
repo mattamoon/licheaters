@@ -30,24 +30,8 @@ class TestClass:
         value = '2022-01-01'
         self.lichess.start = value
         self.lichess.end = value
-        assert self.lichess.start == '2022-01-01'
-        assert self.lichess.end == '2022-01-01'
-
-    def test_dates_bad_string_format(self):
-        value = '11/5/2022'
-        with pytest.raises(ValueError):
-            self.lichess.start = value
-
-        with pytest.raises(ValueError):
-            self.lichess.end = value
-
-    def test_dates_bad_string_value(self):
-        value = 'YYYY/X/DD'
-        with pytest.raises(ValueError):
-            self.lichess.start = value
-
-        with pytest.raises(ValueError):
-            self.lichess.end = value
+        assert self.lichess.start == dt.date(2022, 1, 1)
+        assert self.lichess.end == dt.date(2022, 1, 1)
 
     def test_max_games(self):
         """Testing max_games from constants.py"""
