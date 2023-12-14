@@ -69,7 +69,8 @@ class TestClass:
 
     @pytest.mark.skip(reason="HTTP Error if api key is bad or missing")
     def test_games_by_player_dates(self):
-        """Test Dates, time variables, user has games. If api key is bad or not present expect http 401"""
+        """Test Dates, time variables, user has games. If api key is bad or not present expect http 401
+        - Removed game_dates function 12/13"""
         games = self.lichess.games_by_player_dates()
         for game in games:
             assert game is not None
