@@ -1,12 +1,12 @@
-from gathercheater.functions import lichess_access
 import datetime as dt
 import gathercheater.constants as c
+import berserk
 
 
 class GatherCheater:
 
     def __init__(self):
-        self._lichess = lichess_access()
+        self._lichess = berserk.Client()
         self.__user = c.USER.lower()
         self.__start = c.START
         self.__end = c.END
@@ -38,10 +38,9 @@ class GatherCheater:
 
     @start.setter
     def start(self, value: str):
-        """Use YYYY/m/d format"""
-        value_format = '%Y/%m/%d'
+        """Use ISO Format YYYY-MM-DD"""
         try:
-            self.__start = dt.datetime.strptime(value, value_format)
+            self.__start = dt.datetime.fromisoformat(value)
 
         except (Exception,):
             raise ValueError('Format is probably invalid')
@@ -52,10 +51,9 @@ class GatherCheater:
 
     @end.setter
     def end(self, value: str):
-        """Use yyyy/m/d format to set datetime object"""
-        value_format = '%Y/%m/%d'
+        """Use ISO format YYYY-DD-MM"""
         try:
-            self.__end = dt.datetime.strptime(value, value_format)
+            self.__end = dt.datetime.fromisoformat(value)
         except (Exception,):
             raise ValueError('Format is probably invalid')
 
@@ -74,19 +72,19 @@ class GatherCheater:
     def api_limit(self):
         return self.__api_limit
 
-    def games_by_player_dates(self, berserk_start, berserk_end):
+    def games_by_player_dates(self):
         """Searches Lichess API for games from a user between 2 dates & returns those games as a generator"""
 
-        starting = berserk_start
-        ending = berserk_end
+        starting = berserk.utils.to_millis(self.__start)
+        ending = berserk.utils.to_millis(self.__end)
 
-        games_data = self.lichess.games.export_by_player(self.__user, since=starting, until=ending,
-                                                         max=self.__max_games)
+        games_data = self._lichess.games.export_by_player(self.__user, since=starting, until=ending,
+                                                          max=self.__max_games)
 
         return games_data
 
     def games_by_player_list(self, players):
-        api_data = self.lichess.users.get_by_id(players)
+        api_data = self._lichess.users.get_by_id(players)
         return api_data
 
     @staticmethod

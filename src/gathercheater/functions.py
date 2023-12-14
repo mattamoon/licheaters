@@ -1,32 +1,10 @@
-import os
 import pandas as pd
-import berserk
-import datetime as dt
 from dotenv import load_dotenv
 from gathercheater.constants import LICHESS_API_LIMIT
 
 
 def configure():
     load_dotenv()
-
-
-def lichess_access():
-    lichess_key = os.getenv('api_key')
-    session = berserk.TokenSession(lichess_key)
-    client = berserk.Client(session)
-
-    return client
-
-
-def game_dates(game_date):
-    # Start time variables
-    start_y = int(game_date.strftime('%Y'))
-    start_m = int(game_date.strftime('%m'))
-    start_d = int(game_date.strftime('%d'))
-
-    berserk_date = berserk.utils.to_millis(dt.datetime(start_y, start_m, start_d))
-
-    return berserk_date
 
 
 def remove_user(username, players):

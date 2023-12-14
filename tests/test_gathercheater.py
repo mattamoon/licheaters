@@ -1,16 +1,12 @@
-from gathercheater.functions import lichess_access, configure, load_dotenv, players_to_df, game_dates, list_util, \
-    pd, create_player_list, create_player_string
+from gathercheater.functions import configure, players_to_df, list_util, create_player_list, create_player_string
 from gathercheater.gathercheater import GatherCheater
-from gathercheater.constants import API_KEY, START, END, USER, dt
+from gathercheater.constants import API_KEY, START, END, USER
+from dotenv import load_dotenv
 import gathercheater.constants as c
-import berserk
-import berserk.utils
-import berserk.exceptions
+import pandas as pd
 import pytest
 
-
-__all__ = ('lichess_access',
-           'configure',
+__all__ = ('configure',
            'load_dotenv',
            'configure',
            'GatherCheater',
@@ -29,29 +25,6 @@ class TestClass:
         assert self.lichess.user == user_id.lower()
         assert user_id != self.lichess.user
 
-    def test_dates(self):
-        value = dt.datetime(2022, 1, 1)
-        self.lichess.start = '2022/1/1'
-        self.lichess.end = '2022/1/1'
-        assert self.lichess.start == value
-        assert self.lichess.end == value
-
-    def test_dates_bad_string_format(self):
-        value = '11/5/2022'
-        with pytest.raises(ValueError):
-            self.lichess.start = value
-
-        with pytest.raises(ValueError):
-            self.lichess.end = value
-
-    def test_dates_bad_string_value(self):
-        value = 'YYYY/X/DD'
-        with pytest.raises(ValueError):
-            self.lichess.start = value
-
-        with pytest.raises(ValueError):
-            self.lichess.end = value
-
     def test_max_games(self):
         """Testing max_games from constants.py"""
         assert self.lichess.max_games == c.MAX_GAMES
@@ -69,12 +42,9 @@ class TestClass:
 
     @pytest.mark.skip(reason="HTTP Error if api key is bad or missing")
     def test_games_by_player_dates(self):
-        """Test Dates, time variables, user has games. If api key is bad or not present expect http 401"""
-        b_start = game_dates(self.lichess.start)
-        b_end = game_dates(self.lichess.end)
-        games = self.lichess.games_by_player_dates(b_start, b_end)
-        assert b_start == berserk.utils.to_millis(self.lichess.start)
-        assert b_end == berserk.utils.to_millis(self.lichess.end)
+        """Test Dates, time variables, user has games. If api key is bad or not present expect http 401
+        - Removed game_dates function 12/13"""
+        games = self.lichess.games_by_player_dates()
         for game in games:
             assert game is not None
 
