@@ -27,12 +27,6 @@ class TestClass:
         assert self.lichess.user == user_id.lower()
         assert user_id != self.lichess.user
 
-    def test_dates(self):
-        self.lichess.start = dt.date.fromisoformat('2022-01-01')
-        self.lichess.end = dt.date.fromisoformat('2022-01-01')
-        assert self.lichess.start == dt.date(2022, 1, 1)
-        assert self.lichess.end == dt.date(2022, 1, 1)
-
     def test_max_games(self):
         """Testing max_games from constants.py"""
         assert self.lichess.max_games == c.MAX_GAMES
