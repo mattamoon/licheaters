@@ -1,10 +1,10 @@
 from gathercheater.functions import lichess_access, configure, players_to_df, list_util, create_player_list, create_player_string
 from gathercheater.gathercheater import GatherCheater
 from gathercheater.constants import API_KEY, START, END, USER
+from dotenv import load_dotenv
 import gathercheater.constants as c
 import pandas as pd
 import datetime as dt
-import load_dotenv
 import pytest
 
 __all__ = ('lichess_access',
