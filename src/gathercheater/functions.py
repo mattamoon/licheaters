@@ -9,14 +9,6 @@ def configure():
     load_dotenv()
 
 
-def lichess_access():
-    lichess_key = os.getenv('api_key')
-    session = berserk.TokenSession(lichess_key)
-    client = berserk.Client(session)
-
-    return client
-
-
 def remove_user(username, players):
     # if value is equal to username of the player analyzing, remove from list
     while username in players:

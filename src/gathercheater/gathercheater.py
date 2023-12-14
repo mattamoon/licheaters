@@ -1,4 +1,3 @@
-from gathercheater.functions import lichess_access
 import datetime as dt
 import gathercheater.constants as c
 import berserk
@@ -7,7 +6,7 @@ import berserk
 class GatherCheater:
 
     def __init__(self):
-        self._lichess = lichess_access()
+        self._lichess = berserk.Client()
         self.__user = c.USER.lower()
         self.__start = c.START
         self.__end = c.END
