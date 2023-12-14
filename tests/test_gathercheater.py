@@ -1,4 +1,4 @@
-from gathercheater.functions import lichess_access, configure, load_dotenv, players_to_df, game_dates, list_util, \
+from gathercheater.functions import lichess_access, configure, load_dotenv, players_to_df, list_util, \
     pd, create_player_list, create_player_string
 from gathercheater.gathercheater import GatherCheater
 from gathercheater.constants import API_KEY, START, END, USER, dt
@@ -70,11 +70,7 @@ class TestClass:
     @pytest.mark.skip(reason="HTTP Error if api key is bad or missing")
     def test_games_by_player_dates(self):
         """Test Dates, time variables, user has games. If api key is bad or not present expect http 401"""
-        b_start = game_dates(self.lichess.start)
-        b_end = game_dates(self.lichess.end)
-        games = self.lichess.games_by_player_dates(b_start, b_end)
-        assert b_start == berserk.utils.to_millis(self.lichess.start)
-        assert b_end == berserk.utils.to_millis(self.lichess.end)
+        games = self.lichess.games_by_player_dates()
         for game in games:
             assert game is not None
 
