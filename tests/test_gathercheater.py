@@ -4,7 +4,6 @@ from gathercheater.constants import API_KEY, START, END, USER
 from dotenv import load_dotenv
 import gathercheater.constants as c
 import pandas as pd
-import datetime as dt
 import pytest
 
 __all__ = ('lichess_access',
