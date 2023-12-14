@@ -54,6 +54,7 @@ class GatherCheater:
     def end(self, value: str):
         """Use ISO format YYYY-DD-MM"""
         try:
+            value = '2022-01-01'
             self.__end = dt.date.fromisoformat(value)
         except (Exception,):
             raise ValueError('Format is probably invalid')

@@ -28,10 +28,10 @@ class TestClass:
 
     def test_dates(self):
         value = '2022-01-01'
-        self.lichess.start = dt.date.fromisoformat(value)
-        self.lichess.end = dt.date.fromisoformat(value)
-        assert self.lichess.start == value
-        assert self.lichess.end == value
+        self.lichess.start = value
+        self.lichess.end = value
+        assert self.lichess.start == '2022-01-01'
+        assert self.lichess.end == '2022-01-01'
 
     def test_dates_bad_string_format(self):
         value = '11/5/2022'
