@@ -2,7 +2,7 @@ import datetime as dt
 
 USER = 'basilcandle'
 DF_INDEX = 0
-START = dt.datetime(2032, 1, 1)
+START = dt.datetime(2023, 1, 1)
 END = dt.datetime(2023, 12, 31)
 MAX_GAMES = 100
 
