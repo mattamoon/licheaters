@@ -18,17 +18,6 @@ def lichess_access():
     return client
 
 
-def game_dates(game_date):
-    # Start time variables
-    start_y = int(game_date.strftime('%Y'))
-    start_m = int(game_date.strftime('%m'))
-    start_d = int(game_date.strftime('%d'))
-
-    berserk_date = berserk.utils.to_millis(dt.datetime(start_y, start_m, start_d))
-
-    return berserk_date
-
-
 def remove_user(username, players):
     # if value is equal to username of the player analyzing, remove from list
     while username in players:
