@@ -8,7 +8,6 @@ import berserk.utils
 import berserk.exceptions
 import pytest
 
-
 __all__ = ('lichess_access',
            'configure',
            'load_dotenv',
@@ -30,9 +29,9 @@ class TestClass:
         assert user_id != self.lichess.user
 
     def test_dates(self):
-        value = dt.datetime(2022, 1, 1)
-        self.lichess.start = '2022/1/1'
-        self.lichess.end = '2022/1/1'
+        value = dt.date(2022, 1, 1)
+        self.lichess.start = datetime.date.fromisoformat('2022/1/1')
+        self.lichess.end = datetime.date.fromisoformat('2022/1/1')
         assert self.lichess.start == value
         assert self.lichess.end == value
 
