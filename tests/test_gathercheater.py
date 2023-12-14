@@ -27,9 +27,9 @@ class TestClass:
         assert user_id != self.lichess.user
 
     def test_dates(self):
-        value = dt.date(2022, 1, 1)
-        self.lichess.start = dt.date.fromisoformat('2022/1/1')
-        self.lichess.end = dt.date.fromisoformat('2022/1/1')
+        value = '2022-01-01'
+        self.lichess.start = dt.date.fromisoformat(value)
+        self.lichess.end = dt.date.fromisoformat(value)
         assert self.lichess.start == value
         assert self.lichess.end == value
 
