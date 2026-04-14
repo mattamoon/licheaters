@@ -51,6 +51,8 @@ def create_player_list(df):
 def create_player_string(player_list):
     players_string = ','.join(player_list)
     return players_string
+
+
 # previously the class returned the game data, now yields it.
 def games_reader(games):
     for row in games:

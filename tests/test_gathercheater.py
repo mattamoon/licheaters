@@ -70,10 +70,10 @@ class TestClass:
         assert games[self.lichess.df_index] is not None
 
     def test_get_players_from_games(self):
-        test_dict = [{'id':'x123','speed':'blitz','players': {'white': {'user': {'id': 'basilcandle'}}, 'black': {'user': {'id': 'raz'}}}}, {}]
+        test_dict = [{'id': 'x123', 'speed': 'blitz', 'players': {'white': {'user': {'id': 'basilcandle'}}, 'black': {'user': {'id': 'raz'}}}}, {}]
         games = self.lichess.get_players_from_games(test_dict)
         print(games)
-        assert games == [{'id':'x123','speed':'blitz','user':'basilcandle'},{'id':'x123','speed':'blitz','user':'raz'}]
+        assert games == [{'id': 'x123', 'speed': 'blitz', 'user': 'basilcandle'}, {'id': 'x123', 'speed': 'blitz', 'user': 'raz'}]
 
     def test_check_cheaters(self):
         test = [{'id': 'a', 'tosViolation': True}, {'id': 'b', 'disabled': True}, {'id': 'c'}]
