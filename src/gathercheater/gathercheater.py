@@ -1,6 +1,7 @@
 import datetime as dt
 import gathercheater.constants as c
 import berserk
+from gathercheater.functions import games_reader as games_reader
 
 
 class GatherCheater:
@@ -80,7 +81,6 @@ class GatherCheater:
 
         games_data = self._lichess.games.export_by_player(self.__user, since=starting, until=ending,
                                                           max=self.__max_games)
-
         return games_data
 
     def games_by_player_list(self, players):
@@ -92,10 +92,12 @@ class GatherCheater:
         """get list of players from the list of dicts, returned from games_by_player_dates"""
 
         list_of_players = []
-        for game in game_list:
+        for game in games_reader(game_list):
             try:
-                list_of_players.append(game['players']['white']['user']['name'].lower())
-                list_of_players.append(game['players']['black']['user']['name'].lower())
+                list_of_players.append(
+                    {'id': game['id'], 'speed': game['speed'], 'user': game['players']['white']['user']['id']})
+                list_of_players.append(
+                    {'id': game['id'], 'speed': game['speed'], 'user': game['players']['black']['user']['id']})
             except KeyError:
                 continue
 
@@ -110,12 +112,12 @@ class GatherCheater:
         try:
             for item in players:
                 if item.get('tosViolation'):
-                    cheater_list.append(item['username'])
+                    cheater_list.append(item['id'])
                 elif item.get('disabled'):
-                    closed_accounts.append(item['username'])
+                    closed_accounts.append(item['id'])
                 else:
-                    not_cheater.append(item['username'])
-
+                    not_cheater.append(item['id'])
+        # This whole function/section needs a rework! :)
         except KeyError:
             raise KeyError
 

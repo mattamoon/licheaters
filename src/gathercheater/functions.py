@@ -14,8 +14,8 @@ def remove_user(username, players):
     return players
 
 
-def players_to_df(list_of_players):
-    df = pd.DataFrame(list_of_players, columns=['users'])
+def players_to_df(game_list):
+    df = pd.DataFrame(game_list, columns=['users'])
     list_of_player_dfs = data_chunk(df, LICHESS_API_LIMIT)
 
     return list_of_player_dfs
@@ -51,3 +51,7 @@ def create_player_list(df):
 def create_player_string(player_list):
     players_string = ','.join(player_list)
     return players_string
+# previously the class returned the game data, now yields it.
+def games_reader(games):
+    for row in games:
+        yield row
