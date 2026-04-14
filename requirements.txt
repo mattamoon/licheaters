@@ -1,5 +1,3 @@
 berserk==0.12.3
 pandas==1.3.5
 python-dotenv==0.21.0
-
-
