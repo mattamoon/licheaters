@@ -1,4 +1,4 @@
-from gathercheater.functions import configure, players_to_df, list_util, create_player_list, create_player_string
+from gathercheater.functions import configure, players_to_df, list_util, create_player_list, create_player_string, games_reader
 from gathercheater.gathercheater import GatherCheater
 from gathercheater.constants import API_KEY, START, END, USER
 from dotenv import load_dotenv
@@ -45,7 +45,7 @@ class TestClass:
         """Test Dates, time variables, user has games. If api key is bad or not present expect http 401
         - Removed game_dates function 12/13"""
         games = self.lichess.games_by_player_dates()
-        for game in games:
+        for game in games_reader(games):
             assert game is not None
 
     def test_data_to_df(self):
@@ -70,12 +70,13 @@ class TestClass:
         assert games[self.lichess.df_index] is not None
 
     def test_get_players_from_games(self):
-        test_dict = [{'players': {'white': {'user': {'name': 'basilcandle'}}, 'black': {'user': {'name': 'raz'}}}}, {}]
+        test_dict = [{'id': 'x123', 'speed': 'blitz', 'players': {'white': {'user': {'id': 'basilcandle'}}, 'black': {'user': {'id': 'raz'}}}}, {}]
         games = self.lichess.get_players_from_games(test_dict)
-        assert games == ['basilcandle', 'raz']
+        print(games)
+        assert games == [{'id': 'x123', 'speed': 'blitz', 'user': 'basilcandle'}, {'id': 'x123', 'speed': 'blitz', 'user': 'raz'}]
 
     def test_check_cheaters(self):
-        test = [{'username': 'a', 'tosViolation': True}, {'username': 'b', 'disabled': True}, {'username': 'c'}]
+        test = [{'id': 'a', 'tosViolation': True}, {'id': 'b', 'disabled': True}, {'id': 'c'}]
         tos, closed, good = self.lichess.check_cheaters(test)
 
         assert tos == ['a']
